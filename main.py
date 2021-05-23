@@ -26,6 +26,7 @@ plt.xlabel('Time and Date', fontsize=15, fontweight='bold')
 plt.ylabel('$USD', fontsize=15, fontweight='bold')
 plt.title('Stock Price over last 100 minutes', fontsize=25, fontweight='bold')
 plt.show()
+print(stock_data)
 
 
 
