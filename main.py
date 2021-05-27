@@ -1,10 +1,13 @@
 # Import CSV
 import pandas as pd
 avocado_data = pd.read_csv("avocado.csv")
-print(avocado_data)
-print(avocado_data.type)
 print(avocado_data.info)
+Calavo_SP= pd.read_csv("CVGW.csv")
+print(Calavo_SP.info)
 
+#Merge Cavalo_SP and avocado_data
+avo_and_share = Calavo_SP.merge(avocado_data, on='Date')
+print(avo_and_share.info)
 
 # API for Calavo Growers
 import requests
@@ -40,6 +43,20 @@ avocados_by_region = avocado_data_index.sort_values('region', ascending=True)
 ###Step3 - Use Groupby and sum to calculate sales by region
 sales_by_region = avocados_by_region.groupby('region')['Total Bags'].sum()
 print(sales_by_region)
+
+
+#Identify missing Values/Dropping duplicates
+
+##Make Nil values for average columns as the one before/after
+
+### Looping/ Iterrows
+
+
+#### Merge a historical price data and avocado data
+
+
+
+
 
 
 
