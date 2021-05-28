@@ -2,15 +2,31 @@
 import pandas as pd
 avocado_data = pd.read_csv("avocado.csv")
 print(avocado_data.info)
+print(avocado_data.dtypes)
+avocado_data.Date = pd.to_datetime(avocado_data.Date)
 Calavo_SP= pd.read_csv("CVGW.csv")
 print(Calavo_SP.info)
+print(Calavo_SP.shape)
+print(Calavo_SP.dtypes)
+Calavo_SP.Date = pd.to_datetime(Calavo_SP.Date)
+# import modules
 
-#Merge Cavalo_SP and avocado_data
-avo_and_share = Calavo_SP.merge(avocado_data, on='Date')
+from datetime import timedelta
+# Ensure date datatype on Columns
+avocado_data['Date']  = pd.to_datetime(avocado_data['Date'],format='%Y-%m-%d')
+Calavo_SP['Date']  = pd.to_datetime(Calavo_SP['Date'],format='%Y-%m-%d')
+
+#Merge Cavalo_SP and avocado_data on Day -1
+
+# Create column with new date
+Calavo_SP['date_minus_one'] = Calavo_SP.Date - timedelta(days=1)
+
+avo_and_share = Calavo_SP.merge(avocado_data,how='inner', left_on='date_minus_one',right_on='Date')
+
 print(avo_and_share.info)
+print(avo_and_share.shape)
 
 # API for Calavo Growers
-import requests
 import matplotlib.pyplot as plt
 from alpha_vantage.timeseries import TimeSeries
 API_key = '7Y32JGC45LCIARCK'
