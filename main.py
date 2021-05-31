@@ -1,10 +1,12 @@
 # Import CSV
 import pandas as pd
+import matplotlib.pyplot as plt
 from datetime import timedelta
 import numpy as np
 import seaborn as sns
 avocado_data = pd.read_csv("avocado.csv")
 print(avocado_data.info)
+print(avocado_data.shape)
 print(avocado_data.dtypes)
 avocado_data.Date = pd.to_datetime(avocado_data.Date)
 Calavo_SP = pd.read_csv("CVGW.csv")
@@ -23,7 +25,7 @@ avo_and_share = Calavo_SP.merge(avocado_data, how='inner', left_on='date_minus_o
 print(avo_and_share.info)
 print(avo_and_share.shape)
 # API for Calavo Growers
-import matplotlib.pyplot as plt
+
 from alpha_vantage.timeseries import TimeSeries
 API_key = '7Y32JGC45LCIARCK'
 ts = TimeSeries(key=API_key, output_format='pandas')
