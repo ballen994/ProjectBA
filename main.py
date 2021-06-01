@@ -14,6 +14,9 @@ print(Calavo_SP.info)
 print(Calavo_SP.shape)
 print(Calavo_SP.dtypes)
 Calavo_SP.Date = pd.to_datetime(Calavo_SP.Date)
+# Ensure DataFrame is Sorted by time
+avocado_data.sort_values('Date', ascending=True,inplace=True)
+Calavo_SP.sort_values('Date', ascending=True,inplace=True)
 # Merge  on date
 # Ensure date datatype on Columns
 avocado_data['Date'] = pd.to_datetime(avocado_data['Date'], format='%Y-%m-%d')
@@ -106,28 +109,28 @@ avo_and_share.sort_values('Date_x', ascending=True)
 
 fig, ax1 = plt.subplots()
 fig.set_size_inches(8, 8/1, 6)
-
 colors = ['r','k']
 # Plot On Same Graph with Different Axis
-for i, avo_type in enumerate(avo_and_share.type.unique()):
+for i,avo_type in enumerate(avo_and_share.type.unique()):
 
     ax1.plot(avo_and_share[(avo_and_share.region == 'TotalUS') &
                  (avo_and_share.type == avo_type)].Date_x,
              avo_and_share[(avo_and_share.region == 'TotalUS') &
-                (avo_and_share.type == avo_type)].AveragePrice
-                         , colors[i]
-             , label='Average Price of {} Avocado'.format(region))
-    plt.legend()
+                 (avo_and_share.type == avo_type)].AveragePrice
+                         ,colors[i]
+             ,label= 'Average Price of an Avocado (Total US)')
+    plt.legend(loc='upper left')
 
 ax1.set_ylabel('Average Price of Avocado')
 ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
 
 ax2.plot(avo_and_share[(avo_and_share.region == 'TotalUS') &
-                       (avo_and_share.type == avo_type)].Date_x, avo_and_share
-                        [(avo_and_share.region == 'TotalUS') & (avo_and_share.type == avo_type)].Open,
-                          label='Opening Share Price', color='g')
+                 (avo_and_share.type == avo_type)].Date_x,
+             avo_and_share[(avo_and_share.region == 'TotalUS') &
+                 (avo_and_share.type == avo_type)].Open,label='Opening Share Price'
+        ,color='g')
 ax2.set_ylabel('Calavo Stock Price')
-plt.legend()
+plt.legend(loc='upper right')
 fig.tight_layout()  # otherwise the right y-label is slightly clipped
 plt.show()
 
