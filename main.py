@@ -45,16 +45,16 @@ print(end_of_day_info['close'])
 
 # Plot a graph to visualise the above movement in share price
 plt.plot(stock_data['close'], lw=.5, linestyle='-')
-plt.xlabel('Time and Date', fontsize=15, fontweight='bold')
-plt.ylabel('$USD', fontsize=15, fontweight='bold')
-plt.title('Stock Price over last 100 minutes', fontsize=25, fontweight='bold')
+plt.xlabel('Time and Date', fontsize=10, fontweight='bold')
+plt.ylabel('$USD', fontsize=10, fontweight='bold')
+plt.title('Stock Price over last 100 minutes', fontsize=10, fontweight='bold')
 plt.plot()
 
 # How Many years of Avocado Data in DataFrame
 print(avocado_data.Date.dt.strftime('%Y').unique())
 # How Many Different Regions are in the Avocado DataFrame?
 print('# of Regions:', avocado_data.region.nunique())
-# How Many Different Regions are in the Avocado DataFrame?
+# How Many Different Types are in the Avocado DataFrame?
 print('# of Types:', avocado_data.type.unique())
 # How Does the Average Price of an Avocado Per Region Compare
 average_prices = avocado_data.groupby(['region', 'type']).AveragePrice.mean().reset_index(name='price')
@@ -75,7 +75,7 @@ for avo_type in average_prices.type.unique():
                                       (average_prices.type == avo_type)
                                              ].region.to_string(index=False))
 
-# How does the price for All US of Convential Avocados compare to Organice
+# How does the price for All US of Conventional Avocados compare to Organic
 data = avocado_data[avocado_data.region == 'TotalUS'].groupby(['year', 'type']).AveragePrice.mean().reset_index(
     name='price')
 data.year = pd.to_datetime(data.year, format='%Y')
@@ -84,6 +84,7 @@ data.pivot_table(index='year',columns='type').plot(figsize=(10, 10/1.6))
 plt.title('Average Price for all US of Avocados')
 plt.ylabel('Price [$]')
 plt.xlabel('Year')
+plt.show()
 
 # Avocado Prices for the Top 5 Regions Based on Total Volume
 
@@ -96,7 +97,7 @@ for region in top5_regions:
     plt.plot(avocado_data[(avocado_data.region == region) &
                          (avocado_data.type == 'conventional')].Date
              ,avocado_data[(avocado_data.region == region) &
-                         (avocado_data.type == 'conventional')].AveragePrice,label=region)
+                         (avocado_data.type == 'organic')].AveragePrice,label=region)
 plt.legend()
 plt.title('Price of Avocado - Top 5 Regions by Total Volume')
 plt.ylabel('Price [$]')
@@ -118,7 +119,7 @@ for i,avo_type in enumerate(avo_and_share.type.unique()):
              avo_and_share[(avo_and_share.region == 'TotalUS') &
                  (avo_and_share.type == avo_type)].AveragePrice
                          ,colors[i]
-             ,label= 'Average Price of an Avocado (Total US)')
+             ,label= 'Average Price of {} avocado'.format(avo_type))
     plt.legend(loc='upper left')
 
 ax1.set_ylabel('Average Price of Avocado')
